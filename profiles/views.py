@@ -12,7 +12,6 @@ from django.http import Http404
 # Create your views here.
 class ProfileRetrieveAPIView(RetrieveAPIView):
   permission_classes = (AllowAny,)
-  renderer_classes = (ProfileJSONRenderer,)
   serializer_class = ProfileSerializer
 
   def retrieve(self, request, username, *args, **kwargs):
