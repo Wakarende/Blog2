@@ -74,10 +74,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework_json_api.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+    ],
+    # 'EXCEPTION_HANDLER':'blog.authentication.core.exceptions.core_exception_handler',
+    # 'EXCEPTION_HANDLER': 'blog.authentication.utils.custom_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
 }
 
 # Database

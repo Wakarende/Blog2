@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.core.exceptions import ValidationError
 from .models import User
 from django.contrib.auth import authenticate
 
@@ -31,6 +31,11 @@ class LoginSerializer(serializers.Serializer):
     email = data.get('email', None)
     password = data.get('password', None)
 
+    try:
+      user = authenticate(username=email, password=password)
+    except User.DoesNotExist:
+      raise serializers.ValidationError('Invalid User or Password.')
+
     if email is None:
       raise serializers.ValidationError(
         'An email address is required to log in.'
@@ -40,8 +45,6 @@ class LoginSerializer(serializers.Serializer):
       raise serializers.ValidationError(
         'A password is required to log in.'
       )
-
-      user = authenticate(username=email, password=password)
 
       if user is None:
         raise serializers.ValidationError(
@@ -53,9 +56,39 @@ class LoginSerializer(serializers.Serializer):
           'This user has been deactivated.'
         )
 
-      return {
-        'email': user.email,
-        'username': user.username,
-        'token': user.token
-      }
+    return {
+      'email': user.email,
+      'username': user.username,
+      'token': user.token
+    }
+
+
+class UserSerializer(serializers.ModelSerializer):
+  """Handles serialization and deserialization of User objects."""
+  password = serializers.CharField(
+    max_length=128,
+    min_length=8,
+    write_only=True
+  )
+
+  class Meta:
+    model = User
+    fields = ('email', 'username', 'password', 'token',)
+    read_only_fields = ('token',)
+
+
+  def update(self, instance, validated_data):
+    """Performs an update on a User."""
+    password = validated_data.pop('password', None)
+
+    for (key, value) in validated_data.items():
+      setattr(instance, key, value)
+
+    if password is not None:
+      instance.set_password(password)
+
+      
+    instance.save()
+
+    return instance  
 

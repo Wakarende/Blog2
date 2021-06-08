@@ -12,7 +12,7 @@ from .serializers import RegistrationSerializer,LoginSerializer
 class RegistrationAPIView(APIView):
   permission_classes = [AllowAny,]
   serializer_class = RegistrationSerializer
-  # renderer_classes = (UserJSONRenderer,)
+  # renderer_classes = [UserJSONRenderer,]
 
   def post(self, request,format=None):
     # user = request.data.get(User, {})
@@ -31,13 +31,20 @@ class RegistrationAPIView(APIView):
 
 class LoginAPIView(APIView):
   permission_classes = (AllowAny,)
-  renderer_classes = (UserJSONRenderer,)
+  # renderer_classes = (UserJSONRenderer,)
   serializer_class = LoginSerializer
 
   def post(self, request):
     user = request.data.get('user', {})
+    user = request.data
     print(user)
     serializer = self.serializer_class(data=user)
     serializer.is_valid(raise_exception=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+  def get(self,request, *args, **kwargs):
+    serializer=self.serializer_class(User.objects.all(),many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
+  
