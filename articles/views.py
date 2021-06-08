@@ -10,14 +10,13 @@ from .serializers import ArticleSerializer
 # Create your views here.
 class ArticleViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
 
-  queryset = Article.objects.select_related(‘author’, ‘author__user’)
+  queryset = Article.objects.select_related('author', 'author__user')
   permission_classes = (IsAuthenticatedOrReadOnly,)
-   
   serializer_class = ArticleSerializer
 
-  def create(self, request):
+  def post(self, request):
     serializer_context = {'author': request.user.profile}
-    serializer_data = request.data.get('article', {})
+    serializer_data = request.data
 
     serializer = self.serializer_class(
       data=serializer_data, context=serializer_context
@@ -26,3 +25,7 @@ class ArticleViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
     serializer.save()
 
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+  def get(self,request, *args, **kwargs):
+    serializer=self.serializer_class(Article.objects.all(),many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
