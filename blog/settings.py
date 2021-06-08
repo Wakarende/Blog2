@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'profiles',
     'core',
+    'articles',
 ]
 
 cloudinary.config(
