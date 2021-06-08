@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +42,16 @@ INSTALLED_APPS = [
     'authentication',
     'django_extensions',
     'rest_framework',
+    'cloudinary',
+    'profiles',
+    'core',
 ]
+
+cloudinary.config(
+    cloud_name="joykirii",
+    api_key="856224545722866",
+    api_secret="zwRThSjWRshRNjfDbfHRCblm4HI",
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +88,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'authentication.backends.JWTAuthentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework_json_api.parsers.JSONParser',
@@ -88,8 +99,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
-    # 'EXCEPTION_HANDLER':'blog.authentication.core.exceptions.core_exception_handler',
+
+    # 'EXCEPTION_HANDLER':'authentication.core.exceptions.core_exception_handler',
     # 'EXCEPTION_HANDLER': 'blog.authentication.utils.custom_exception_handler',
+
     'NON_FIELD_ERRORS_KEY': 'error',
 }
 
