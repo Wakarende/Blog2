@@ -1,7 +1,7 @@
 # import Json
 import json 
 
-from rest_framework.renderers import JsonRenderer
+from rest_framework.renderers import JSONRenderer
 
 class UserJSONRenderer(JSONRenderer):
   charset = 'utf-8'
@@ -15,3 +15,4 @@ class UserJSONRenderer(JSONRenderer):
       return json.dumps({
         'user': data
       })
+      
