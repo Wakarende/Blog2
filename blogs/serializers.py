@@ -18,6 +18,8 @@ class CommentSerializer(serializers.ModelSerializer):
     model=Comments
     fields=(
       'id',
-      'comment'
-      'published'
+      'comment',
+      'article',
+      'user',
+      'published',
     )

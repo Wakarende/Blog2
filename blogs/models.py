@@ -24,7 +24,8 @@ class Comments(models.Model):
   comment=models.TextField(null=True)
   user=models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE, null=True)
   published = models.DateTimeField(auto_now_add=True)
-
+  article = models.ForeignKey(Article,related_name='article', on_delete=models.CASCADE, null=True)
+  
   def __str__(self):
     return str(self.comment)
   
