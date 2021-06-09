@@ -3,10 +3,10 @@ from .models import User
 # from django.contrib.auth.models import User
 from blogs.serializers import ArticleSerializer
 
-class ProfileSerializer(serializers.ModelSerializer):
-    article=ArticleSerializer(many=True, read_only=True)
-    class Meta:
-      model = Profile
+# class ProfileSerializer(serializers.ModelSerializer):
+#     article=ArticleSerializer(many=True, read_only=True)
+#     class Meta:
+#       model = Profile
 
 
       
