@@ -5,10 +5,11 @@ from django.shortcuts import render
 from .models import Article
 from .serializers import ArticleSerializer
 from rest_framework.decorators import api_view
-from django.http.response import JsonResponse
-from rest_framework.parsers import JsonParser
+# from django.http.response import JsonResponse
+# from rest_framework.parsers import JsonParser
 from rest_framework import status
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 class ArticleView(APIView):
   serializer_class = ArticleSerializer
@@ -16,7 +17,7 @@ class ArticleView(APIView):
 
   def get_article(self, pk,format=None):
     try:
-      return Articly.objects.get(pk=pk)
+      return Article.objects.get(pk=pk)
     except Article.DoesNotExist:
       raise Http404
 
@@ -60,5 +61,6 @@ class singleArticleView(APIView):
     post = self.get_article(pk)
     serializers = self.serializer_class(post)
     return Response(serializers.data)
+
 
 

@@ -1,12 +1,13 @@
 from django.urls import path
-from . import views
+from .views import ArticleView,singleArticleView
+
 
 urlpatterns=[
-  path('', ArticleView.as_view()),
-  path('<int:pk>/',ArticleView.as_view()),
-  path('get/<int:pk>/',singleArticleView.as_view()),
-  path('update/<int:pk>/', ArticleView.as_view()),
-  path('delete/<int:pk>/', ArticleView.as_view()),
+  path('blogs/', ArticleView.as_view()),
+  path('blogs/<int:pk>/',singleArticleView.as_view()),
+  # path('blogs/get/<int:pk>/',singleArticleView.as_view()),
+  path('blogs/update/<int:pk>/', ArticleView.as_view()),
+  path('blogs/delete/<int:pk>/', ArticleView.as_view()),
 ]
 
 
