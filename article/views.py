@@ -1,47 +1,47 @@
-from django.shortcuts import render
+# from django.shortcuts import render
+# from rest_framework.exceptions import NotFound
+# from rest_framework import mixins,status,viewsets
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly,AllowAny
+# from rest_framework.response import Response
 
-from rest_framework import mixins,status,viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly,AllowAny
-from rest_framework.response import Response
+# from .models import Article
+# # from .renderers import ArticleJSONRenderer
+# from .serializers import ArticleSerializer
 
-from .models import Article
-# from .renderers import ArticleJSONRenderer
-from .serializers import ArticleSerializer
+# # Create your views here.
+# class ArticleViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
+#   lookup_field = 'slug'
+#   queryset = Article.objects.select_related('author', 'author__user')
+#   permission_classes = (AllowAny,)
+#   # renderer_classes = (ArticleJSONRenderer,)
+#   serializer_class = ArticleSerializer
 
-# Create your views here.
-class ArticleViewSet(mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin,viewsets.GenericViewSet):
-  lookup_field = 'slug'
-  queryset = Article.objects.select_related('author', 'author__user')
-  permission_classes = (AllowAny,)
-  # renderer_classes = (ArticleJSONRenderer,)
-  serializer_class = ArticleSerializer
+#   def post(self, request, format=None):
+#     serializer_context = {'author': request.user.profile}
+#     serializer_data = request.data
 
-  def post(self, request, format=None):
-    serializer_context = {'author': request.user.profile}
-    serializer_data = request.data
+#     serializer = self.serializer_class(
+#       data=serializer_data, context=serializer_context
+#     )
+#     serializer.is_valid(raise_exception=True)
+#     serializer.save()
 
-    serializer = self.serializer_class(
-      data=serializer_data, context=serializer_context
-    )
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
+#     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+#   def get(self,request, *args, **kwargs):
+#     serializer=self.serializer_class(Article.objects.all(),many=True)
+#     return Response(serializer.data,status=status.HTTP_200_OK)
 
-  def get(self,request, *args, **kwargs):
-    serializer=self.serializer_class(Article.objects.all(),many=True)
-    return Response(serializer.data,status=status.HTTP_200_OK)
-
-  def put(self,request,slug):
-    try:
-      serializer_instance = self.queryset.get(slug=slug)
-    except Article.DoesNotExist:
-      raise NotFound('An article with this slug does not exist.')
+#   def retrieve(self,request,slug):
+#     try:
+#       serializer_instance = self.queryset.get(slug=slug)
+#     except Article.DoesNotExist:
+#       raise NotFound('An article with this slug does not exist.')
     
-    serializer_data = request.data.get('article', {})
+#     serializer_data = request.data.get('article', {})
 
-    serializer = self.serializer_class(serializer_instance, data=serializer_data, partial=True)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    
-    return Response(serializer.data, status=status.HTTP_200_OK)
+#     serializer = self.serializer_class(serializer_instance, data=serializer_data, partial=True)
+#     serializer.is_valid(raise_exception=True)
+#     serializer.save()
+
+#     return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,15 +1,15 @@
-# import Json
-import json 
+# # import Json
+# import json 
 
-from rest_framework.renderers import JSONRenderer
+# from rest_framework.renderers import JSONRenderer
 
-class UserJSONRenderer(ConduitJSONRenderer):
-  object_label = 'user'
+# class UserJSONRenderer(ConduitJSONRenderer):
+#   object_label = 'user'
  
-  def render(self, data, media_type=None, renderer_context=None):
-    token = data.get('token', None)
+#   def render(self, data, media_type=None, renderer_context=None):
+#     token = data.get('token', None)
 
-    if token is not None and isinstance(token, bytes):
-      data['token'] = token.decode('utf-8')
+#     if token is not None and isinstance(token, bytes):
+#       data['token'] = token.decode('utf-8')
 
-    return super(UserJSONRenderer, self).render(data)
+#     return super(UserJSONRenderer, self).render(data)

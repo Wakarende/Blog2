@@ -1,6 +1,6 @@
-from core.renderers import ConduitJSONRenderer
+# from core.renderers import ConduitJSONRenderer
 
-class ArticleJSONRenderer(ConduitJSONRenderer):
-  object_label = 'article'
-  object_label_plural='articles'
+# class ArticleJSONRenderer(ConduitJSONRenderer):
+#   object_label = 'article'
+#   object_label_plural='articles'
 
