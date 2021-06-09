@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Profile
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from blogs.serializers import ArticleSerializer
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -58,4 +58,5 @@ class LoginSerializer(serializers.ModelSerializer):
   class Meta:
     model=User
     fields=["username", "password"]
+
 
