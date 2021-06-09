@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # 'article',
     'user',
     'blogs',
+    'rest_framework.authtoken',
 
 ]
 
