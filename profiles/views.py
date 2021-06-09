@@ -6,13 +6,16 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .models import Profile
-
+from .renderers import ProfileJSONRenderer
 from .serializers import ProfileSerializer
 from django.http import Http404
+from .exceptions import ProfileDoesNotExist
+
 # Create your views here.
 class ProfileRetrieveAPIView(RetrieveAPIView):
-  permission_classes = (AllowAny,)
+  permission_classes = [AllowAny,]
   serializer_class = ProfileSerializer
+  renderer_classes = [ProfileJSONRenderer,]
 
   def retrieve(self, request, username, *args, **kwargs):
     try:
@@ -20,7 +23,7 @@ class ProfileRetrieveAPIView(RetrieveAPIView):
         user__username=username
       )
     except Profile.DoesNotExist:
-      raise HTTP404()
+      raise ProfileDoesNotExist
 
     serializer = self.serializer_class(profile)
 

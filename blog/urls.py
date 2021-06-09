@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('authentication.urls', namespace='authentication')),
     path('api/',include('profiles.urls', namespace='profiles')),
-    path('api/',include('articles.urls', namespace='articles')),
+    # path('api/' , include('articles.urls',namespace='articles')),
 ]
 

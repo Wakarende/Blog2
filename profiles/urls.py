@@ -7,3 +7,4 @@ urlpatterns = [
     path('profiles/<str:username>', ProfileRetrieveAPIView.as_view()),
 ]
 
+
