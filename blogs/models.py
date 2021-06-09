@@ -13,7 +13,8 @@ class Article(models.Model):
   body=models.TextField(blank=False)
   published = models.BooleanField(default=False)
   user=models.ForeignKey(User, related_name='article',on_delete=models.CASCADE,null=True)
-
+  # comments = models.ForeignKey(Comments, related_name='comments', on_delete=models.CASCADE,null=True)
+  
   def __str__(self):
     return str(self.title)
 
@@ -25,7 +26,7 @@ class Comments(models.Model):
   user=models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE, null=True)
   published = models.DateTimeField(auto_now_add=True)
   article = models.ForeignKey(Article,related_name='article', on_delete=models.CASCADE, null=True)
-  
+
   def __str__(self):
     return str(self.comment)
   
